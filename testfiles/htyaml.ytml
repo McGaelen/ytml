@@ -1,0 +1,52 @@
+
+- h1: "YTML: Hello World"
+- p: This is a test file for YTML, a way to write HTML in YAML.
+
+- p: |
+    Each key is always of type Scalar (string/number) or Sequence (list).
+    There are no Maps/Objects because keys may not be unique. Take <li> for
+    example, which wouldn't be possible if we didn't use lists, since you have
+    to have multiple <li>'s as children of the same parent.
+- ul:
+    - li: List Item 1
+    - li: List Item 2
+
+- p: |  
+    If a key is Scalar, it will become the text content of that element. The element
+    will become a leaf node and be considered to have no children.
+- b: Bold tag that only has a Scalar value!
+
+- p: |
+    If a key is a Sequence, it will have one or more child elements. Each child can also
+    just be text content. Whatever is in the list will be appended to the parent's innerHTML
+    in the order it was defined in the source YTML. If a parent element only has a single child,
+    it still must be defined as a Sequence; in this case, a sequence of length 1.
+    # multiple text nodes with "inline" bold tag
+- p:
+    - This has an inline
+    - b: bold
+    - tag, in YAML flow style.
+- p: [This also has an inline, {b: bold}, "tag, in YAML block style."]
+
+- p: |
+    Attributes are declared in the key of the element, because YAML allows spaces, quotes, 
+    and other characters to be keys. Attributes follow the same syntax rules as HTML - they must be
+    separated by spaces, and be written as `attr="value"`. An exception exists when using the colon
+    `:` character, which is a reserved character to denote a key in YAML. To not be read as a key,
+    the colon must not have any whitespace to the immediate right of itself. For example, `style`
+    attributes must be written like `style="font-size:16px;"` with no space next to the colon.
+- button onclick="doThing()" style="background-color:blue": Click
+- a href="https://www.google.com" role="button": Link to Google
+
+- p: Elements can be specified using multiple lines by using YAML's "explicit key" syntax.
+- ? a
+    href="https://www.google.com"
+    role="button"
+    : Link to Google
+
+- p: Text content can have multiple lines using YAML's multiline strings.
+- script: |
+    function doThing() {
+      console.log('hello')
+    }
+
